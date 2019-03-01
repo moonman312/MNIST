@@ -9,7 +9,7 @@ import numpy as np
 
 #Set up env so that nothing is sent to stdout unless there is a failure
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-tf.logging.set_verbosity(tf.logging.FATAL)
+tf.logging.set_verbosity(tf.logging.ERROR)
 
 def train():
     print("Loading IDX Training Data")
@@ -44,6 +44,9 @@ def predict(model, image_file_path):
         sess.run(tf.global_variables_initializer())
         image = tf.expand_dims(image, 0)
         image = image.eval()
+        # image = Image.open(image_file_path).convert('LA')
+        # image = image.resize((28, 28,))
+        # image = np.asarray(image)
         #normalize between 0 and 1
         image = image / 255
         print(f'Predicting {image_file_path}')
